@@ -6,10 +6,10 @@ import {
   ServerError
 } from '../../../presentation/errors'
 import { EmailValidator } from '../../../presentation/protocols'
-import { UserCreateController } from './create'
+import { CreateUserController } from './create'
 
 interface SutTypes {
-  sut: UserCreateController
+  sut: CreateUserController
   emailValidatorStub: EmailValidator
   createUserStub: CreateUser
 }
@@ -32,7 +32,7 @@ const makeCreateUser = (): CreateUser => {
         id: 1,
         name: 'name',
         email: 'name@email.com',
-        password: '1234'
+        password: 'password'
       }
       return new Promise((resolve) => resolve(fakeData))
     }
@@ -43,7 +43,7 @@ const makeCreateUser = (): CreateUser => {
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
   const createUserStub = makeCreateUser()
-  const sut = new UserCreateController(emailValidatorStub, createUserStub)
+  const sut = new CreateUserController(emailValidatorStub, createUserStub)
   return {
     sut,
     emailValidatorStub,
@@ -51,14 +51,14 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('Name of the group', () => {
+describe('user create controller', () => {
   test('should return 400 if no name is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
         email: 'name@email.com',
-        password: '1234',
-        passwordConfirmation: '1234'
+        password: 'password',
+        passwordConfirmation: 'password'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -71,8 +71,8 @@ describe('Name of the group', () => {
     const httpRequest = {
       body: {
         name: 'name',
-        password: '1234',
-        passwordConfirmation: '1234'
+        password: 'password',
+        passwordConfirmation: 'password'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -86,7 +86,7 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'name@email.com',
-        passwordConfirmation: '1234'
+        passwordConfirmation: 'password'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -100,7 +100,7 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'name@email.com',
-        password: '1234'
+        password: 'password'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -116,7 +116,7 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'name@email.com',
-        password: '1234',
+        password: 'password',
         passwordConfirmation: 'invalid'
       }
     }
@@ -134,8 +134,8 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'invalid@email.com',
-        password: '1234',
-        passwordConfirmation: '1234'
+        password: 'password',
+        passwordConfirmation: 'password'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -150,8 +150,8 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'nome@email.com',
-        password: '1234',
-        passwordConfirmation: '1234'
+        password: 'password',
+        passwordConfirmation: 'password'
       }
     }
     await sut.handle(httpRequest)
@@ -167,8 +167,8 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'name@email.com',
-        password: '1234',
-        passwordConfirmation: '1234'
+        password: 'password',
+        passwordConfirmation: 'password'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -185,8 +185,8 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'name@email.com',
-        password: '1234',
-        passwordConfirmation: '1234'
+        password: 'password',
+        passwordConfirmation: 'password'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -201,15 +201,15 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'nome@email.com',
-        password: '1234',
-        passwordConfirmation: '1234'
+        password: 'password',
+        passwordConfirmation: 'password'
       }
     }
     await sut.handle(httpRequest)
     expect(createSpy).toHaveBeenCalledWith({
       name: 'name',
       email: 'nome@email.com',
-      password: '1234'
+      password: 'password'
     })
   })
 
@@ -219,8 +219,8 @@ describe('Name of the group', () => {
       body: {
         name: 'name',
         email: 'name@email.com',
-        password: '1234',
-        passwordConfirmation: '1234'
+        password: 'password',
+        passwordConfirmation: 'password'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -229,7 +229,7 @@ describe('Name of the group', () => {
       id: 1,
       name: 'name',
       email: 'name@email.com',
-      password: '1234'
+      password: 'password'
     })
   })
 })

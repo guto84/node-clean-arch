@@ -11,7 +11,7 @@ import {
 import { badRequest, ok, serverError } from '../../../presentation/helpers'
 import { CreateUser } from '../../../domain/usecases'
 
-export class UserCreateController implements Controller {
+export class CreateUserController implements Controller {
   constructor(
     private readonly emailValidator: EmailValidator,
     private readonly creteUser: CreateUser

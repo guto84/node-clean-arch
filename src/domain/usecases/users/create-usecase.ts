@@ -1,5 +1,5 @@
 import { UserEntity } from '../../entities'
 
-export interface CreateUser {
+export type CreateUser = {
   handle(body: Omit<UserEntity, 'id'>): Promise<UserEntity>
 }
