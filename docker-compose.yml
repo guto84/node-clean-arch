@@ -1,0 +1,46 @@
+version: "3.9"
+volumes:
+  node-clean-arch-mongo:
+networks:
+  node-clean-arch-mongo:
+services:
+  mongo:
+    image: mongo
+    container_name: node-clean-arch-mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - node-clean-arch-mongo:/data/db
+    networks:
+      - node-clean-arch-mongo
+  # postgres:
+  #   image: postgres:9.6
+  #   container_name: nethub-postgres
+  #   restart: always
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - nethub-postgres:/var/lib/postgresql/data
+  #     - ./:/scripts
+  #     - ./postgres.sql:/docker-entrypoint-initdb.d/init.sql
+  #   environment:
+  #     POSTGRES_DB: nethub
+  #     POSTGRES_USER: guto
+  #     POSTGRES_PASSWORD: 1234
+  #   networks:
+  #     - nethub-postgres
+  node-clean-arch:
+    image: node:lts
+    container_name: node-clean-arch
+    restart: always
+    volumes:
+      - ./:/node-clean-arch
+    ports:
+      - 5000:5000
+    working_dir: /node-clean-arch
+    networks:
+      - node-clean-arch-mongo
+    depends_on:
+      - mongo
+    command: bash -c "npm run dev"
