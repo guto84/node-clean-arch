@@ -1,12 +1,12 @@
 import { UserEntity } from '../../../domain/entities'
 import { Encrypter } from '../../protocols'
-import { CreateUserRepository } from '../../protocols'
-import { DbCreateUser } from './db-create'
+import { CreateUserRepositoryProtocol } from '../../protocols'
+import { CreateDataUser } from './create-data'
 
 type SutTypes = {
-  sut: DbCreateUser
+  sut: CreateDataUser
   encrypterStub: Encrypter
-  createUserRepositoryStub: CreateUserRepository
+  createUserRepositoryStub: CreateUserRepositoryProtocol
 }
 
 const makeEncrypter = (): Encrypter => {
@@ -19,8 +19,8 @@ const makeEncrypter = (): Encrypter => {
   return new EncrypterStub()
 }
 
-const makeCreateUserRepository = (): CreateUserRepository => {
-  class CreateUserRepositoryStub implements CreateUserRepository {
+const makeCreateUserRepository = (): CreateUserRepositoryProtocol => {
+  class CreateUserRepositoryStub implements CreateUserRepositoryProtocol {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handle(body: Omit<UserEntity, 'id'>): Promise<UserEntity> {
       return new Promise((resolve) =>
@@ -28,8 +28,8 @@ const makeCreateUserRepository = (): CreateUserRepository => {
           id: 1,
           name: 'name',
           email: 'name@email.com.br',
-          password: 'encryp_password'
-        })
+          password: 'encryp_password',
+        }),
       )
     }
   }
@@ -39,11 +39,11 @@ const makeCreateUserRepository = (): CreateUserRepository => {
 const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypter()
   const createUserRepositoryStub = makeCreateUserRepository()
-  const sut = new DbCreateUser(encrypterStub, createUserRepositoryStub)
+  const sut = new CreateDataUser(encrypterStub, createUserRepositoryStub)
   return {
     sut,
     encrypterStub,
-    createUserRepositoryStub
+    createUserRepositoryStub,
   }
 }
 
@@ -54,7 +54,7 @@ describe('db create user', () => {
     const body = {
       name: 'name',
       email: 'name@email.com.br',
-      password: 'password'
+      password: 'password',
     }
     await sut.handle(body)
     expect(encryptSpy).toHaveBeenCalledWith('password')
@@ -65,12 +65,12 @@ describe('db create user', () => {
     jest
       .spyOn(encrypterStub, 'encrypt')
       .mockReturnValueOnce(
-        new Promise((resolve, reject) => reject(new Error()))
+        new Promise((resolve, reject) => reject(new Error())),
       )
     const body = {
       name: 'name',
       email: 'name@email.com.br',
-      password: 'encryp_password'
+      password: 'encryp_password',
     }
     const promise = sut.handle(body)
     await expect(promise).rejects.toThrow()
@@ -82,7 +82,7 @@ describe('db create user', () => {
     const body = {
       name: 'name',
       email: 'name@email.com.br',
-      password: 'encryp_password'
+      password: 'encryp_password',
     }
     await sut.handle(body)
     expect(createSpy).toHaveBeenCalledWith(body)
@@ -93,12 +93,12 @@ describe('db create user', () => {
     jest
       .spyOn(createUserRepositoryStub, 'handle')
       .mockReturnValueOnce(
-        new Promise((resolve, reject) => reject(new Error()))
+        new Promise((resolve, reject) => reject(new Error())),
       )
     const body = {
       name: 'name',
       email: 'name@email.com.br',
-      password: 'encryp_password'
+      password: 'encryp_password',
     }
     const promise = sut.handle(body)
     await expect(promise).rejects.toThrow()
@@ -109,14 +109,14 @@ describe('db create user', () => {
     const body = {
       name: 'name',
       email: 'name@email.com.br',
-      password: 'encryp_password'
+      password: 'encryp_password',
     }
     const response = await sut.handle(body)
     expect(response).toEqual({
       id: 1,
       name: 'name',
       email: 'name@email.com.br',
-      password: 'encryp_password'
+      password: 'encryp_password',
     })
   })
 })

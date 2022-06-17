@@ -189,4 +189,12 @@ export default {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  preset: 'ts-jest',
+  globalSetup: '<rootDir>/src/infra/repository/mongoose/config/globalSetup.ts',
+  globalTeardown:
+    '<rootDir>/src/infra/repository/mongoose/config/globalTeardown.ts',
+  setupFilesAfterEnv: [
+    '<rootDir>/src/infra/repository/mongoose/config/setupFile.ts',
+  ],
 }

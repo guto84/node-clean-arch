@@ -2,11 +2,11 @@ import {
   HttpRequest,
   HttpResponse,
   Controller,
-  EmailValidator
+  EmailValidator,
 } from '../../../presentation/protocols'
 import {
   InvalidParamError,
-  MissingParamError
+  MissingParamError,
 } from '../../../presentation/errors'
 import { badRequest, ok, serverError } from '../../../presentation/helpers'
 import { CreateUser } from '../../../domain/usecases'
@@ -14,7 +14,7 @@ import { CreateUser } from '../../../domain/usecases'
 export class CreateUserController implements Controller {
   constructor(
     private readonly emailValidator: EmailValidator,
-    private readonly creteUser: CreateUser
+    private readonly creteUser: CreateUser,
   ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -24,7 +24,7 @@ export class CreateUserController implements Controller {
         'name',
         'email',
         'password',
-        'passwordConfirmation'
+        'passwordConfirmation',
       ]
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
@@ -45,7 +45,6 @@ export class CreateUserController implements Controller {
 
       return ok(response)
     } catch (error) {
-      console.error(error)
       return serverError()
     }
   }

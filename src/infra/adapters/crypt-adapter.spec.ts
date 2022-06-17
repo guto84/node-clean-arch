@@ -4,7 +4,7 @@ import { CryptAdapter } from './crypt-adapter'
 jest.mock('bcrypt', () => ({
   async hash(): Promise<string> {
     return new Promise((resolve) => resolve('encrypt_password'))
-  }
+  },
 }))
 
 const salt = 12

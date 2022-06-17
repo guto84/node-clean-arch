@@ -3,7 +3,7 @@ import { CreateUser } from '../../../domain/usecases'
 import {
   InvalidParamError,
   MissingParamError,
-  ServerError
+  ServerError,
 } from '../../../presentation/errors'
 import { EmailValidator } from '../../../presentation/protocols'
 import { CreateUserController } from './create'
@@ -32,7 +32,7 @@ const makeCreateUser = (): CreateUser => {
         id: 1,
         name: 'name',
         email: 'name@email.com',
-        password: 'password'
+        password: 'password',
       }
       return new Promise((resolve) => resolve(fakeData))
     }
@@ -47,7 +47,7 @@ const makeSut = (): SutTypes => {
   return {
     sut,
     emailValidatorStub,
-    createUserStub
+    createUserStub,
   }
 }
 
@@ -58,8 +58,8 @@ describe('user create controller', () => {
       body: {
         email: 'name@email.com',
         password: 'password',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
@@ -72,8 +72,8 @@ describe('user create controller', () => {
       body: {
         name: 'name',
         password: 'password',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
@@ -86,8 +86,8 @@ describe('user create controller', () => {
       body: {
         name: 'name',
         email: 'name@email.com',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
@@ -100,13 +100,13 @@ describe('user create controller', () => {
       body: {
         name: 'name',
         email: 'name@email.com',
-        password: 'password'
-      }
+        password: 'password',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.data).toEqual(
-      new MissingParamError('passwordConfirmation')
+      new MissingParamError('passwordConfirmation'),
     )
   })
 
@@ -117,13 +117,13 @@ describe('user create controller', () => {
         name: 'name',
         email: 'name@email.com',
         password: 'password',
-        passwordConfirmation: 'invalid'
-      }
+        passwordConfirmation: 'invalid',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.data).toEqual(
-      new InvalidParamError('passwordConfirmation')
+      new InvalidParamError('passwordConfirmation'),
     )
   })
 
@@ -135,8 +135,8 @@ describe('user create controller', () => {
         name: 'name',
         email: 'invalid@email.com',
         password: 'password',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
@@ -151,8 +151,8 @@ describe('user create controller', () => {
         name: 'name',
         email: 'nome@email.com',
         password: 'password',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     await sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith('nome@email.com')
@@ -168,8 +168,8 @@ describe('user create controller', () => {
         name: 'name',
         email: 'name@email.com',
         password: 'password',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
@@ -186,8 +186,8 @@ describe('user create controller', () => {
         name: 'name',
         email: 'name@email.com',
         password: 'password',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
@@ -202,14 +202,14 @@ describe('user create controller', () => {
         name: 'name',
         email: 'nome@email.com',
         password: 'password',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     await sut.handle(httpRequest)
     expect(createSpy).toHaveBeenCalledWith({
       name: 'name',
       email: 'nome@email.com',
-      password: 'password'
+      password: 'password',
     })
   })
 
@@ -220,8 +220,8 @@ describe('user create controller', () => {
         name: 'name',
         email: 'name@email.com',
         password: 'password',
-        passwordConfirmation: 'password'
-      }
+        passwordConfirmation: 'password',
+      },
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(200)
@@ -229,7 +229,7 @@ describe('user create controller', () => {
       id: 1,
       name: 'name',
       email: 'name@email.com',
-      password: 'password'
+      password: 'password',
     })
   })
 })
