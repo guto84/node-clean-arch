@@ -1,12 +1,8 @@
 import { UserEntity } from '../../../domain/entities'
 import { CreateUser } from '../../../domain/usecases'
-import {
-  InvalidParamError,
-  MissingParamError,
-  ServerError,
-} from '../../../presentation/errors'
-import { EmailValidator } from '../../../presentation/protocols'
-import { CreateUserController } from './create'
+import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
+import { EmailValidator } from '../../protocols'
+import { CreateUserController } from './create-controller'
 
 interface SutTypes {
   sut: CreateUserController

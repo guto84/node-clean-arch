@@ -3,12 +3,9 @@ import {
   HttpResponse,
   Controller,
   EmailValidator,
-} from '../../../presentation/protocols'
-import {
-  InvalidParamError,
-  MissingParamError,
-} from '../../../presentation/errors'
-import { badRequest, ok, serverError } from '../../../presentation/helpers'
+} from '../../protocols'
+import { InvalidParamError, MissingParamError } from '../../errors'
+import { badRequest, ok, serverError } from '../../helpers'
 import { CreateUser } from '../../../domain/usecases'
 
 export class CreateUserController implements Controller {

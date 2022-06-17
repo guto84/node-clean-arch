@@ -1,1 +1,1 @@
-export * from './users/create'
+export * from './users/create-controller'
