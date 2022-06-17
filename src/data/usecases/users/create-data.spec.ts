@@ -1,10 +1,10 @@
 import { UserEntity } from '../../../domain/entities'
 import { Encrypter } from '../../protocols'
 import { CreateUserRepositoryProtocol } from '../../protocols'
-import { CreateDataUser } from './create-data'
+import { CreateUserData } from './create-data'
 
 type SutTypes = {
-  sut: CreateDataUser
+  sut: CreateUserData
   encrypterStub: Encrypter
   createUserRepositoryStub: CreateUserRepositoryProtocol
 }
@@ -39,7 +39,7 @@ const makeCreateUserRepository = (): CreateUserRepositoryProtocol => {
 const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypter()
   const createUserRepositoryStub = makeCreateUserRepository()
-  const sut = new CreateDataUser(encrypterStub, createUserRepositoryStub)
+  const sut = new CreateUserData(encrypterStub, createUserRepositoryStub)
   return {
     sut,
     encrypterStub,

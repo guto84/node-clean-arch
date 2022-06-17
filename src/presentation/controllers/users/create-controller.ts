@@ -11,7 +11,7 @@ import { CreateUser } from '../../../domain/usecases'
 export class CreateUserController implements Controller {
   constructor(
     private readonly emailValidator: EmailValidator,
-    private readonly creteUser: CreateUser,
+    private readonly createUser: CreateUser,
   ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -38,7 +38,7 @@ export class CreateUserController implements Controller {
         return badRequest(new InvalidParamError('email'))
       }
 
-      const response = await this.creteUser.handle({ name, email, password })
+      const response = await this.createUser.handle({ name, email, password })
 
       return ok(response)
     } catch (error) {

@@ -2,7 +2,7 @@ import { UserEntity } from '../../../domain/entities'
 import { CreateUser } from '../../../domain/usecases'
 import { CreateUserRepositoryProtocol, Encrypter } from '../../protocols'
 
-export class CreateDataUser implements CreateUser {
+export class CreateUserData implements CreateUser {
   constructor(
     private readonly encrypter: Encrypter,
     private readonly createUserRepository: CreateUserRepositoryProtocol,
